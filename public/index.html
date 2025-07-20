@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEase - Your Online Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1><i class="fas fa-shopping-bag"></i> ShopEase</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-link" onclick="showHome()">Home</a>
+                <a href="#productsSection" class="nav-link" id="navProductsLink">Products</a>
+                <div class="nav-auth" id="navAuth">
+                    <button class="btn btn-outline" onclick="showLogin()">Login</button>
+                    <button class="btn btn-primary" onclick="showRegister()">Register</button>
+                </div>
+                <div class="nav-user" id="navUser" style="display: none;">
+                    <span id="userName"></span>
+                    <button class="btn btn-outline" onclick="showOrders()">My Orders</button>
+                    <button class="btn btn-danger" onclick="logout()">Logout</button>
+                </div>
+            </div>
+            <div class="nav-cart">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Home Section -->
+        <section id="homeSection" class="section">
+            <div class="hero-banner">
+                <div class="hero-banner-content">
+                    <span class="hero-trending">Trending Item</span>
+                    <h1 class="hero-title">LATEST PRODUCTS SALE</h1>
+                    <p class="hero-subtitle">starting at <span class="hero-price">$20.00</span></p>
+                    <button class="btn btn-primary btn-large" onclick="showProducts()">Shop Now</button>
+                </div>
+                <div class="hero-banner-image">
+                    <img src="images/shopping.png" alt="Shopping Couple">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="aboutSection" class="section">
+            <div class="about-contact">
+                <h2>About Us</h2>
+                <p>ShopEase is your trusted online store for quality products and great deals. We are committed to providing the best shopping experience for our customers.</p>
+            </div>
+        </section>
+
+        <!-- Contact Info Section -->
+        <section id="contactInfoSection" class="section">
+            <div class="about-contact">
+                <h3>Our Address</h3>
+                <p><strong>Phone:</strong> +94 712912915<br>
+                <strong>Address:</strong> 34/1, Homagama, Colombo</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contactSection" class="section">
+            <div class="contact-hero">
+                <h1>Contact Us</h1>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Let's Start a Conversation</h2>
+                    <p>Ask how we can help you:</p>
+                    <ul>
+                        <li>See our platform in action</li>
+                        <li>Get product or order support</li>
+                        <li>Learn more about our services</li>
+                        <li>Share your feedback</li>
+                    </ul>
+                </div>
+                <form class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="productsSection" class="section" style="display: none;">
+            <div class="container">
+                <h2>Our Products</h2>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Details Section -->
+        <section id="productDetailsSection" class="section" style="display: none;">
+            <div class="container">
+                <button class="btn btn-outline" onclick="showProducts()">
+                    <i class="fas fa-arrow-left"></i> Back to Products
+                </button>
+                <div class="product-details" id="productDetails">
+                    <!-- Product details will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="loginSection" class="section" style="display: none;">
+            <div class="container">
+                <div class="auth-form">
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    <p>Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="registerSection" class="section" style="display: none;">
+            <div class="container">
+                <div class="auth-form">
+                    <h2>Register</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="registerUsername">Username</label>
+                            <input type="text" id="registerUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                    <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="ordersSection" class="section" style="display: none;">
+            <div class="container">
+                <h2>My Orders</h2>
+                <div class="orders-list" id="ordersList">
+                    <!-- Orders will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="cart-close" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be loaded here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="btn btn-primary" onclick="checkout()" id="checkoutBtn" disabled>
+                Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <!-- Loading Spinner -->
+    <div class="loading" id="loading" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
