@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Test</title>
+</head>
+<body>
+    <h1>Products API Test</h1>
+    <button onclick="testProductsAPI()">Test Products API</button>
+    <div id="results"></div>
+
+    <script>
+        async function testProductsAPI() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>Loading...</p>';
+            
+            try {
+                console.log('Fetching products...');
+                const response = await fetch('/api/products');
+                console.log('Response:', response);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const products = await response.json();
+                console.log('Products:', products);
+                
+                resultsDiv.innerHTML = `
+                    <h2>Success! Found ${products.length} products:</h2>
+                    <pre>${JSON.stringify(products, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
