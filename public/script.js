@@ -26,7 +26,8 @@ const loading = document.getElementById('loading');
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
-    loadProducts();
+    console.log('DOM loaded, initializing application...');
+    // Don't load products immediately - wait until user navigates to products
     loadCart();
     checkAuthStatus();
     
@@ -59,13 +60,22 @@ function showHome() {
 }
 
 function showProducts() {
+    console.log('showProducts called');
     hideAllSections();
     sections.products.style.display = 'block';
     // Hide About and Contact sections
     document.getElementById('aboutSection').style.display = 'none';
     document.getElementById('contactInfoSection').style.display = 'none';
     document.getElementById('contactSection').style.display = 'none';
-    loadProducts();
+    
+    // Load products if not already loaded
+    if (products.length === 0) {
+        console.log('Products not loaded yet, loading now...');
+        loadProducts();
+    } else {
+        console.log('Products already loaded, displaying...');
+        displayProducts();
+    }
 }
 
 function showProductDetails(productId) {
@@ -101,7 +111,11 @@ async function loadProducts() {
     showLoading();
     try {
         const response = await fetch('/api/products');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         products = await response.json();
+        console.log('Products loaded:', products);
         displayProducts();
     } catch (error) {
         console.error('Error loading products:', error);
@@ -113,7 +127,22 @@ async function loadProducts() {
 
 function displayProducts() {
     const productsGrid = document.getElementById('productsGrid');
+    console.log('Display products called, products:', products);
+    console.log('Products grid element:', productsGrid);
+    
+    if (!productsGrid) {
+        console.error('Products grid element not found!');
+        showError('Could not find products display area');
+        return;
+    }
+    
     productsGrid.innerHTML = '';
+
+    if (!products || products.length === 0) {
+        console.log('No products to display');
+        productsGrid.innerHTML = '<p class="no-products">No products available at the moment.</p>';
+        return;
+    }
 
     products.forEach(product => {
         const productCard = document.createElement('div');
@@ -141,6 +170,8 @@ function displayProducts() {
         
         productsGrid.appendChild(productCard);
     });
+    
+    console.log('Products displayed successfully');
 }
 
 async function loadProductDetails(productId) {
@@ -548,11 +579,66 @@ function hideLoading() {
 }
 
 function showSuccess(message) {
-    // Simple success notification
-    alert(message);
+    // Create a toast notification
+    createToast(message, 'success');
 }
 
 function showError(message) {
-    // Simple error notification
-    alert('Error: ' + message);
+    // Create a toast notification  
+    createToast('Error: ' + message, 'error');
+}
+
+function createToast(message, type) {
+    // Remove any existing toast
+    const existingToast = document.querySelector('.toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+    
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    
+    // Add styles
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 24px;
+        border-radius: 6px;
+        color: white;
+        font-weight: 500;
+        z-index: 10000;
+        animation: slideIn 0.3s ease-out;
+        max-width: 400px;
+        word-wrap: break-word;
+        ${type === 'success' ? 'background-color: #10b981;' : 'background-color: #ef4444;'}
+    `;
+    
+    // Add to page
+    document.body.appendChild(toast);
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
+// Add CSS animations
+if (!document.querySelector('#toast-styles')) {
+    const style = document.createElement('style');
+    style.id = 'toast-styles';
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
 } 
