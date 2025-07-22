@@ -195,6 +195,14 @@ body {
     margin-top: 2rem;
 }
 
+.no-products {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+    font-size: 1.1rem;
+    grid-column: 1 / -1;
+}
+
 .product-card {
     background: white;
     border-radius: 15px;
