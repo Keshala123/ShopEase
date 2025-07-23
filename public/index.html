@@ -314,6 +314,91 @@
         </section>
     </main>
 
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal" style="display: none;">
+        <div class="payment-modal-content">
+            <div class="payment-header">
+                <h2>🔒 Secure Payment</h2>
+                <button class="payment-close" onclick="closePaymentModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="payment-body">
+                <div class="payment-summary">
+                    <h3>Order Summary</h3>
+                    <div class="payment-items" id="paymentItems">
+                        <!-- Payment items will be loaded here -->
+                    </div>
+                    <div class="payment-total">
+                        <strong>Total: <span id="paymentTotal">$0.00</span></strong>
+                    </div>
+                </div>
+
+                <div class="payment-methods">
+                    <h3>Payment Method</h3>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="credit-card" checked>
+                            <div class="payment-option-content">
+                                <i class="fas fa-credit-card"></i>
+                                <span>Credit/Debit Card</span>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="paypal">
+                            <div class="payment-option-content">
+                                <i class="fab fa-paypal"></i>
+                                <span>PayPal</span>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="bank-transfer">
+                            <div class="payment-option-content">
+                                <i class="fas fa-university"></i>
+                                <span>Bank Transfer</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="payment-form" id="paymentForm">
+                    <h3>Payment Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardName">Name on Card</label>
+                        <input type="text" id="cardName" placeholder="John Doe">
+                    </div>
+                </div>
+
+                <div class="payment-actions">
+                    <button class="btn btn-outline" onclick="closePaymentModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="processPayment()" id="paymentBtn">
+                        <i class="fas fa-lock"></i> Pay Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Overlay -->
+    <div class="payment-overlay" id="paymentOverlay" onclick="closePaymentModal()"></div>
+
     <!-- Shopping Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
