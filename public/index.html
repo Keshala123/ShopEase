@@ -40,15 +40,137 @@
     <main class="main">
         <!-- Home Section -->
         <section id="homeSection" class="section">
+            <!-- Hero Banner -->
             <div class="hero-banner">
                 <div class="hero-banner-content">
-                    <span class="hero-trending">Trending Item</span>
-                    <h1 class="hero-title">LATEST PRODUCTS SALE</h1>
-                    <p class="hero-subtitle">starting at <span class="hero-price">$20.00</span></p>
-                    <button class="btn btn-primary btn-large" onclick="showProducts()">Shop Now</button>
+                    <span class="hero-trending">🔥 Trending Now</span>
+                    <h1 class="hero-title">DISCOVER AMAZING DEALS</h1>
+                    <p class="hero-subtitle">Premium quality products starting at <span class="hero-price">$19.99</span></p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-large" onclick="showProducts()">
+                            <i class="fas fa-shopping-bag"></i> Shop Now
+                        </button>
+                        <button class="btn btn-outline btn-large" onclick="document.getElementById('featuresSection').scrollIntoView({behavior: 'smooth'})">
+                            <i class="fas fa-info-circle"></i> Learn More
+                        </button>
+                    </div>
                 </div>
                 <div class="hero-banner-image">
-                    <img src="images/shopping.png" alt="Shopping Couple">
+                    <img src="images/shopping.png" alt="Shopping Experience">
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div id="featuresSection" class="features-section">
+                <div class="container">
+                    <h2 class="section-title">Why Choose ShopEase?</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <h3>Fast Delivery</h3>
+                            <p>Get your orders delivered quickly with our efficient shipping network</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Secure Shopping</h3>
+                            <p>Your data is protected with advanced security measures and encryption</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h3>Quality Products</h3>
+                            <p>Carefully curated products from trusted brands and suppliers</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3>24/7 Support</h3>
+                            <p>Our customer support team is always ready to help you</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Categories -->
+            <div class="categories-section">
+                <div class="container">
+                    <h2 class="section-title">Popular Categories</h2>
+                    <div class="categories-grid">
+                        <div class="category-card" onclick="showProducts()">
+                            <div class="category-image">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <h3>Electronics</h3>
+                            <p>Latest gadgets & devices</p>
+                        </div>
+                        <div class="category-card" onclick="showProducts()">
+                            <div class="category-image">
+                                <i class="fas fa-tshirt"></i>
+                            </div>
+                            <h3>Clothing</h3>
+                            <p>Fashion & apparel</p>
+                        </div>
+                        <div class="category-card" onclick="showProducts()">
+                            <div class="category-image">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h3>Home & Garden</h3>
+                            <p>Home essentials & decor</p>
+                        </div>
+                        <div class="category-card" onclick="showProducts()">
+                            <div class="category-image">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h3>Books</h3>
+                            <p>Knowledge & entertainment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="stats-section">
+                <div class="container">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">1000+</div>
+                            <div class="stat-label">Happy Customers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Products Available</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Customer Support</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">99%</div>
+                            <div class="stat-label">Satisfaction Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="newsletter-section">
+                <div class="container">
+                    <div class="newsletter-content">
+                        <h2>Stay Updated with Our Latest Offers!</h2>
+                        <p>Subscribe to our newsletter and never miss out on exclusive deals and new arrivals</p>
+                        <div class="newsletter-form">
+                            <input type="email" placeholder="Enter your email address" class="newsletter-input">
+                            <button class="btn btn-primary newsletter-btn">
+                                <i class="fas fa-envelope"></i> Subscribe
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -56,17 +178,20 @@
         <!-- About Us Section -->
         <section id="aboutSection" class="section">
             <div class="about-contact">
-                <h2>About Us</h2>
-                <p>ShopEase is your trusted online store for quality products and great deals. We are committed to providing the best shopping experience for our customers.</p>
+                <h2>About ShopEase</h2>
+                <p>ShopEase is your premier destination for quality products and exceptional shopping experiences. Founded with a vision to make online shopping simple, secure, and enjoyable, we curate the best products from trusted suppliers worldwide.</p>
+                <p>Our commitment to customer satisfaction drives everything we do - from product selection to customer service. Join thousands of satisfied customers who trust ShopEase for their shopping needs.</p>
             </div>
         </section>
 
         <!-- Contact Info Section -->
         <section id="contactInfoSection" class="section">
             <div class="about-contact">
-                <h3>Our Address</h3>
-                <p><strong>Phone:</strong> +94 712912915<br>
-                <strong>Address:</strong> 34/1, Homagama, Colombo</p>
+                <h3>Get in Touch</h3>
+                <p><strong>📞 Phone:</strong> +94 712912915<br>
+                <strong>📍 Address:</strong> 34/1, Homagama, Colombo, Sri Lanka<br>
+                <strong>✉️ Email:</strong> info@shopease.com<br>
+                <strong>🕒 Hours:</strong> Mon-Fri 9AM-6PM</p>
             </div>
         </section>
 
