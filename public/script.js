@@ -35,6 +35,29 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
     document.getElementById('registerForm').addEventListener('submit', handleRegister);
 
+    // Newsletter subscription
+    const newsletterBtn = document.querySelector('.newsletter-btn');
+    const newsletterInput = document.querySelector('.newsletter-input');
+    
+    if (newsletterBtn && newsletterInput) {
+        newsletterBtn.addEventListener('click', function() {
+            const email = newsletterInput.value.trim();
+            if (email && isValidEmail(email)) {
+                // Simulate newsletter subscription
+                createToast('Successfully subscribed to newsletter!', 'success');
+                newsletterInput.value = '';
+            } else {
+                createToast('Please enter a valid email address', 'error');
+            }
+        });
+        
+        newsletterInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                newsletterBtn.click();
+            }
+        });
+    }
+
     // Nav Products link scroll and show
     const navProductsLink = document.getElementById('navProductsLink');
     if (navProductsLink) {
@@ -48,6 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Email validation function
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 
 // Navigation functions
 function showHome() {
