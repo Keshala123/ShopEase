@@ -27,6 +27,17 @@ const loading = document.getElementById('loading');
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing application...');
+    
+    // Verify all sections are found
+    console.log('Sections found:', {
+        home: !!sections.home,
+        products: !!sections.products,
+        productDetails: !!sections.productDetails,
+        login: !!sections.login,
+        register: !!sections.register,
+        orders: !!sections.orders
+    });
+    
     // Don't load products immediately - wait until user navigates to products
     loadCart();
     checkAuthStatus();
@@ -110,29 +121,69 @@ function showProducts() {
 function showProductDetails(productId) {
     hideAllSections();
     sections.productDetails.style.display = 'block';
+    // Hide About and Contact sections
+    document.getElementById('aboutSection').style.display = 'none';
+    document.getElementById('contactInfoSection').style.display = 'none';
+    document.getElementById('contactSection').style.display = 'none';
     loadProductDetails(productId);
 }
 
 function showLogin() {
+    console.log('showLogin called');
     hideAllSections();
-    sections.login.style.display = 'block';
+    if (sections.login) {
+        sections.login.style.display = 'block';
+        console.log('Login section displayed');
+    } else {
+        console.error('Login section not found');
+    }
+    // Hide About and Contact sections
+    document.getElementById('aboutSection').style.display = 'none';
+    document.getElementById('contactInfoSection').style.display = 'none';
+    document.getElementById('contactSection').style.display = 'none';
 }
 
 function showRegister() {
+    console.log('showRegister called');
     hideAllSections();
-    sections.register.style.display = 'block';
+    if (sections.register) {
+        sections.register.style.display = 'block';
+        console.log('Register section displayed');
+    } else {
+        console.error('Register section not found');
+    }
+    // Hide About and Contact sections
+    document.getElementById('aboutSection').style.display = 'none';
+    document.getElementById('contactInfoSection').style.display = 'none';
+    document.getElementById('contactSection').style.display = 'none';
 }
 
 function showOrders() {
     hideAllSections();
     sections.orders.style.display = 'block';
+    // Hide About and Contact sections
+    document.getElementById('aboutSection').style.display = 'none';
+    document.getElementById('contactInfoSection').style.display = 'none';
+    document.getElementById('contactSection').style.display = 'none';
     loadOrders();
 }
 
 function hideAllSections() {
+    // Hide main sections
     Object.values(sections).forEach(section => {
-        section.style.display = 'none';
+        if (section) {
+            section.style.display = 'none';
+        }
     });
+    
+    // Also hide About and Contact sections explicitly
+    const aboutSection = document.getElementById('aboutSection');
+    const contactInfoSection = document.getElementById('contactInfoSection');
+    const contactSection = document.getElementById('contactSection');
+    
+    if (aboutSection) aboutSection.style.display = 'none';
+    if (contactInfoSection) contactInfoSection.style.display = 'none';
+    if (contactSection) contactSection.style.display = 'none';
 }
 
 // Product functions
@@ -476,8 +527,113 @@ async function checkout() {
         return;
     }
 
+    // Show payment modal instead of processing immediately
+    showPaymentModal();
+}
+
+function showPaymentModal() {
+    const modal = document.getElementById('paymentModal');
+    const overlay = document.getElementById('paymentOverlay');
+    const paymentItems = document.getElementById('paymentItems');
+    const paymentTotal = document.getElementById('paymentTotal');
+    
+    // Clear previous items
+    paymentItems.innerHTML = '';
+    
+    // Add cart items to payment summary
+    let total = 0;
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        
+        const paymentItem = document.createElement('div');
+        paymentItem.className = 'payment-item';
+        paymentItem.innerHTML = `
+            <span>${item.name} x ${item.quantity}</span>
+            <span>$${itemTotal.toFixed(2)}</span>
+        `;
+        paymentItems.appendChild(paymentItem);
+    });
+    
+    paymentTotal.textContent = `$${total.toFixed(2)}`;
+    
+    // Show modal
+    modal.style.display = 'flex';
+    overlay.style.display = 'block';
+    
+    // Add card formatting
+    setupCardFormatting();
+}
+
+function closePaymentModal() {
+    const modal = document.getElementById('paymentModal');
+    const overlay = document.getElementById('paymentOverlay');
+    
+    modal.style.display = 'none';
+    overlay.style.display = 'none';
+}
+
+function setupCardFormatting() {
+    const cardNumber = document.getElementById('cardNumber');
+    const expiryDate = document.getElementById('expiryDate');
+    const cvv = document.getElementById('cvv');
+    
+    // Format card number
+    cardNumber.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+        let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+        e.target.value = formattedValue;
+    });
+    
+    // Format expiry date
+    expiryDate.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        e.target.value = value;
+    });
+    
+    // Format CVV
+    cvv.addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/[^0-9]/gi, '');
+    });
+}
+
+async function processPayment() {
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    const cardNumber = document.getElementById('cardNumber').value;
+    const expiryDate = document.getElementById('expiryDate').value;
+    const cvv = document.getElementById('cvv').value;
+    const cardName = document.getElementById('cardName').value;
+    
+    // Validate payment details
+    if (paymentMethod === 'credit-card') {
+        if (!cardNumber || !expiryDate || !cvv || !cardName) {
+            showError('Please fill in all payment details');
+            return;
+        }
+        
+        if (cardNumber.replace(/\s/g, '').length < 13) {
+            showError('Please enter a valid card number');
+            return;
+        }
+        
+        if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
+            showError('Please enter a valid expiry date (MM/YY)');
+            return;
+        }
+        
+        if (cvv.length < 3) {
+            showError('Please enter a valid CVV');
+            return;
+        }
+    }
+    
     showLoading();
+    
     try {
+        // First create the order
         const items = cart.map(item => ({
             productId: item.productId,
             quantity: item.quantity,
@@ -486,30 +642,63 @@ async function checkout() {
 
         const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-        const response = await fetch('/api/orders', {
+        const orderResponse = await fetch('/api/orders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
-            body: JSON.stringify({ items, totalAmount })
+            body: JSON.stringify({ 
+                items, 
+                totalAmount, 
+                paymentMethod: paymentMethod 
+            })
         });
 
-        const data = await response.json();
+        const orderData = await orderResponse.json();
         
-        if (response.ok) {
+        if (!orderResponse.ok) {
+            throw new Error(orderData.error);
+        }
+
+        // Process payment
+        const paymentResponse = await fetch('/api/payment/process', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                orderId: orderData.orderId,
+                paymentMethod: paymentMethod,
+                paymentDetails: {
+                    cardNumber: cardNumber?.replace(/\s/g, ''),
+                    expiryDate: expiryDate,
+                    cardName: cardName
+                },
+                totalAmount: totalAmount
+            })
+        });
+
+        const paymentData = await paymentResponse.json();
+        
+        if (paymentResponse.ok && paymentData.success) {
+            // Payment successful
             cart = [];
             saveCart();
             updateCartDisplay();
-            showSuccess(`Order placed successfully! Order ID: ${data.orderId}`);
+            closePaymentModal();
             toggleCart();
+            
+            showSuccess(`🎉 Payment successful! Order ID: ${orderData.orderId}\nTransaction ID: ${paymentData.transactionId}`);
             showOrders();
         } else {
-            showError(data.error);
+            showError(paymentData.message || 'Payment failed. Please try again.');
         }
+        
     } catch (error) {
-        console.error('Checkout error:', error);
-        showError('Checkout failed. Please try again.');
+        console.error('Payment error:', error);
+        showError('Payment failed. Please try again.');
     } finally {
         hideLoading();
     }
