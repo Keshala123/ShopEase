@@ -9,7 +9,8 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f8f9fa;
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 50%, #fff8e1 100%);
+    min-height: 100vh;
 }
 
 /* Header Styles */
@@ -204,12 +205,13 @@ body {
 }
 
 .product-card {
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 50%, #fff8f0 100%);
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
     cursor: pointer;
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 
 .product-card:hover {
@@ -263,10 +265,11 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     margin-top: 2rem;
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 50%, #fff8f0 100%);
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 
 .product-details-image {
@@ -336,10 +339,11 @@ body {
 .auth-form {
     max-width: 400px;
     margin: 0 auto;
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 50%, #fff8f0 100%);
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 
 .auth-form h2 {
@@ -399,12 +403,13 @@ body {
     right: -400px;
     width: 400px;
     height: 100vh;
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 50%, #fff8f0 100%);
     box-shadow: -5px 0 15px rgba(0,0,0,0.1);
     transition: right 0.3s ease;
     z-index: 1001;
     display: flex;
     flex-direction: column;
+    border-left: 2px solid rgba(102, 126, 234, 0.1);
 }
 
 .cart-sidebar.open {
@@ -489,7 +494,7 @@ body {
 .cart-footer {
     padding: 1.5rem;
     border-top: 1px solid #e0e0e0;
-    background: #f8f9fa;
+    background: linear-gradient(135deg, #f8f9ff 0%, #fff8f0 100%);
 }
 
 .cart-total {
@@ -524,11 +529,12 @@ body {
 }
 
 .order-item {
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 50%, #fff8f0 100%);
     border-radius: 10px;
     padding: 1.5rem;
     margin-bottom: 1rem;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 
 .order-header {
@@ -657,7 +663,7 @@ body {
 
 .about-contact {
     margin-top: 2rem;
-    background: #fff;
+    background: linear-gradient(135deg, #ffffff 0%, #f3e5f5 50%, #e8f5e8 100%);
     padding: 2rem 1.5rem;
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(102, 126, 234, 0.10), 0 1.5px 6px rgba(118, 75, 162, 0.08);
@@ -667,6 +673,7 @@ body {
     margin-right: auto;
     text-align: left;
     transition: box-shadow 0.3s;
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 .about-contact:hover {
     box-shadow: 0 8px 32px rgba(102, 126, 234, 0.18), 0 3px 12px rgba(118, 75, 162, 0.12);
@@ -717,12 +724,13 @@ body {
     gap: 3rem;
     max-width: 900px;
     margin: 0 auto 2rem auto;
-    background: #fff;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 50%, #fff8f0 100%);
     border-radius: 18px;
     box-shadow: 0 4px 24px rgba(102, 126, 234, 0.10), 0 1.5px 6px rgba(118, 75, 162, 0.08);
     padding: 2.5rem 2rem;
     align-items: flex-start;
     flex-wrap: wrap;
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 
 .contact-info {
@@ -815,7 +823,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 60%, #e0c3fc 100%);
+    background: linear-gradient(120deg, #e3f2fd 0%, #f3e5f5 30%, #fff8e1 60%, #e8f5e8 100%);
     border-radius: 24px;
     box-shadow: 0 4px 24px rgba(102, 126, 234, 0.10), 0 1.5px 6px rgba(118, 75, 162, 0.08);
     padding: 2.5rem 3rem 2.5rem 2rem;
@@ -823,6 +831,7 @@ body {
     min-height: 500px;
     gap: 2.5rem;
     overflow: hidden;
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 .hero-banner-content {
     flex: 1 1 350px;
@@ -887,9 +896,10 @@ body {
 /* Features Section */
 .features-section {
     padding: 4rem 0;
-    background: linear-gradient(135deg, #f8fafc 0%, #e1f5fe 100%);
+    background: linear-gradient(135deg, #e8f5e8 0%, #e1f5fe 50%, #fff3e0 100%);
     margin: 3rem 0;
     border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
 }
 
 .section-title {
@@ -912,7 +922,7 @@ body {
 }
 
 .feature-card {
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
     padding: 2rem;
     border-radius: 16px;
     text-align: center;
@@ -955,6 +965,9 @@ body {
 .categories-section {
     padding: 4rem 0;
     margin: 3rem 0;
+    background: linear-gradient(135deg, #fce4ec 0%, #e8f5e8 50%, #fff8e1 100%);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
 }
 
 .categories-grid {
@@ -965,7 +978,7 @@ body {
 }
 
 .category-card {
-    background: white;
+    background: linear-gradient(135deg, #ffffff 0%, #f3e5f5 50%, #e8f5e8 100%);
     padding: 2rem;
     border-radius: 16px;
     text-align: center;
@@ -1041,11 +1054,12 @@ body {
 
 /* Newsletter Section */
 .newsletter-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #e8f5e8 100%);
+    background: linear-gradient(135deg, #e8f5e8 0%, #e3f2fd 50%, #fff3e0 100%);
     padding: 4rem 0;
     margin: 3rem 0;
     border-radius: 24px;
     text-align: center;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.08);
 }
 
 .newsletter-content h2 {
