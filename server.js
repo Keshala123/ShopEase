@@ -55,6 +55,9 @@ db.serialize(() => {
         user_id INTEGER,
         total_amount REAL NOT NULL,
         status TEXT DEFAULT 'pending',
+        payment_method TEXT DEFAULT 'pending',
+        payment_status TEXT DEFAULT 'pending',
+        transaction_id TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users (id)
     )`);
@@ -248,15 +251,16 @@ app.get('/api/products/:id', (req, res) => {
 
 // Create order
 app.post('/api/orders', authenticateToken, (req, res) => {
-    const { items, totalAmount } = req.body;
+    const { items, totalAmount, paymentMethod } = req.body;
     const userId = req.user.id;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
         return res.status(400).json({ error: 'Order items are required' });
     }
 
-    db.run('INSERT INTO orders (user_id, total_amount) VALUES (?, ?)', 
-        [userId, totalAmount], 
+    // Insert order with payment info
+    db.run('INSERT INTO orders (user_id, total_amount, payment_method, payment_status) VALUES (?, ?, ?, ?)', 
+        [userId, totalAmount, paymentMethod || 'pending', 'completed'], 
         function(err) {
             if (err) {
                 return res.status(500).json({ error: 'Database error' });
@@ -273,9 +277,58 @@ app.post('/api/orders', authenticateToken, (req, res) => {
                 if (err) {
                     return res.status(500).json({ error: 'Database error' });
                 }
-                res.json({ orderId, message: 'Order created successfully' });
+                res.json({ orderId, message: 'Order created successfully', paymentStatus: 'completed' });
             });
         });
+});
+
+// Process payment endpoint
+app.post('/api/payment/process', authenticateToken, (req, res) => {
+    const { orderId, paymentMethod, paymentDetails, totalAmount } = req.body;
+    
+    // Simulate payment processing
+    setTimeout(() => {
+        // In a real app, you would integrate with payment gateway like Stripe, PayPal etc.
+        const isPaymentSuccessful = Math.random() > 0.1; // 90% success rate for demo
+        
+        if (isPaymentSuccessful) {
+            // Update order payment status
+            db.run('UPDATE orders SET payment_status = ?, payment_method = ? WHERE id = ?',
+                ['completed', paymentMethod, orderId],
+                function(err) {
+                    if (err) {
+                        return res.status(500).json({ error: 'Database error' });
+                    }
+                    res.json({ 
+                        success: true, 
+                        message: 'Payment processed successfully',
+                        transactionId: 'TXN' + Date.now(),
+                        orderId: orderId
+                    });
+                });
+        } else {
+            res.status(400).json({ 
+                success: false, 
+                message: 'Payment failed. Please try again.' 
+            });
+        }
+    }, 2000); // Simulate processing time
+});
+
+// Create payment intent (for advanced payment processing)
+app.post('/api/payment/intent', authenticateToken, (req, res) => {
+    const { amount, currency = 'USD' } = req.body;
+    
+    // Simulate creating payment intent
+    const paymentIntent = {
+        id: 'pi_' + Date.now(),
+        amount: amount * 100, // Convert to cents
+        currency: currency,
+        status: 'requires_payment_method',
+        client_secret: 'pi_' + Date.now() + '_secret_' + Math.random().toString(36).substr(2, 9)
+    };
+    
+    res.json(paymentIntent);
 });
 
 // Get user orders
